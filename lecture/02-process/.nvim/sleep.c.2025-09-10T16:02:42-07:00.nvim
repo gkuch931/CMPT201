@@ -1,0 +1,14 @@
+#include <stdbool.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <string.h>
+int main() {
+  char *message = "Hello world!\n";
+  for (int i = 0; i < strlen(message); i++) {
+    printf("%c", message[i]);
+    fflush(stdout);
+    sleep(2);
+  }
+  printf("\n");
+  printf("DONE\n");
+}
