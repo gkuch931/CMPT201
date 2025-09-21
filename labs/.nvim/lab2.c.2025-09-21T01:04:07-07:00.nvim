@@ -1,0 +1,10 @@
+#define _POSIX_C_SOURCE
+#include <stdio.h>
+
+int main() {
+  size_t len = 0;
+  getline(NULL, &len, stdin);
+  if (fork() == 0) {
+    exec();
+  }
+}
