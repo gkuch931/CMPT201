@@ -1,0 +1,28 @@
+#define _POSIX_C_SOURCE 200809L
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+int main() {
+  char *line = NULL;
+  size_t len = 0;
+  char *pointerArr[5];
+  int i = 0;
+  char *comparator = "print\n";
+  int counter = 0;
+  while (1) {
+    getline(&line, &len, stdin);
+    if (counter < 5) {
+      counter++;
+      printf("%d\n", counter);
+    }
+    free(pointerArr[i]);
+    pointerArr[i] = line;
+    if (strcmp(line, comparator) == 0) {
+      printf("Hello World");
+    }
+    line = NULL;
+    printf("%s", pointerArr[i]);
+    i++;
+    i = i % 4;
+  }
+}
