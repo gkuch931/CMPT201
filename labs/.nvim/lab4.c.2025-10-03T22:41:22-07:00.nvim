@@ -1,0 +1,4 @@
+#include <stdint.h>
+#include <unistd.h>
+
+int main() { intptr_t *program_break = sbrk(256); }

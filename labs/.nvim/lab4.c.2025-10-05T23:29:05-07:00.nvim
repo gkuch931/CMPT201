@@ -1,0 +1,39 @@
+#include <stdint.h>
+#include <stdio.h>
+#include <unistd.h>
+
+struct header {
+  uint64_t size;
+  struct header *next;
+};
+
+int main() {
+  intptr_t *program_break = sbrk(256);
+  struct header *header1 = (struct header *)program_break;
+  for (int i = 0; i < 16; i++) {
+    printf("%02X, Address: %p\n", ((uint8_t *)(header1)+i), ((uint8_t *)(&header1)+i));
+  }
+  uint8_t *header1data = (uint8_t *)(header1 + 1);
+  for (int i = 0; i < 112; i++) {
+    *(header1data + i) = 0x00;
+  }
+
+  struct header *header2 = (struct header *)(program_break + 16);
+  uint8_t *header2data = (uint8_t *)(header2 + 1);
+  for (int i = 0; i < 112; i++) {
+    *(header2data + i) = 0xFF;
+  }
+
+  uint8_t *reader1 = (uint8_t *)(header1);
+  for (int i = 0; i < 128; i++) {
+    printf("%02X, Address: %p\n", reader1[i], &reader1[i]);
+  }
+
+  uint8_t *reader2 = (uint8_t *)(header2);
+  for (int i = 0; i < 128; i++) {
+    printf("%02X, Address: %p\n", reader2[i], &reader2[i]);
+  }
+
+  // printf("%zu\n", header1);
+  // printf("%zu\n", header2);
+}

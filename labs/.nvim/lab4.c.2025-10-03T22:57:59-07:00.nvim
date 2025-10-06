@@ -1,0 +1,13 @@
+#include <stdint.h>
+#include <unistd.h>
+
+struct header {
+  uint64_t size;
+  struct header *next;
+};
+
+int main() {
+  intptr_t *program_break = sbrk(256);
+  //*program_break=
+  printf("%lu", sizeof(intptr_t));
+}
